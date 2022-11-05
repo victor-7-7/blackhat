@@ -1,0 +1,19 @@
+import socket
+
+HOST = '127.0.0.1'
+PORT = 9997
+
+client = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+client.sendto(b'AAABBBCCC', (HOST, PORT))
+# Поскольку протокол UDP не поддерживает соединения, перед
+# взаимодействием нет вызова connect()
+
+# принимаем какие-нибудь UDP-данные. Вместе с данными этот
+# вызов возвращает информацию об удаленном адресе и порте
+data, address = client.recvfrom(4096)
+
+
+print(data.decode('utf-8'))
+print(address.decode('utf-8'))
+
+client.close()
